@@ -54,7 +54,7 @@ function retarget {
 }
 
 if [ -z ${pr} ]; then
-	for pr in `hub api --obey-ratelimit --paginate /repos/${org}/${repo}/pulls | sed '/^]/ {N; s/]\n\[/,/g;}' | jq '.[].number'`; do
+	for pr in `hub api --obey-ratelimit --paginate /repos/${org}/${repo}/pulls | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq '.[].number'`; do
 		retarget ${org} ${base} ${repo} ${branch} ${pr}
 	done
 else
