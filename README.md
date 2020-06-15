@@ -2,6 +2,11 @@ Scripts for switching Github repos to use a "main" branch as the default.
 
 Pre-requisites: you need the [Hub CLI](https://hub.github.com/) to interact with Github, and you need [JQ](https://stedolan.github.io/jq/) for parsing and mangling JSON. Make sure both the scripts in this repo are on your `PATH`. You may need to authenticate with Github via Hub before you start (or it might prompt you the first time it needs it).
 
+```
+$ git clone https://github.com/dsyer/main-branch-switch && cd $_
+$ export PATH=`pwd`:$PATH
+```
+
 To create a "main" branch and retarget all the pull requests in all the repositories in your personal Github organization:
 
 ```
