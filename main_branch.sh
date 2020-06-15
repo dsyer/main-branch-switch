@@ -60,7 +60,7 @@ function main_branch {
 }
 
 if [ -z ${repo} ]; then
-	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed '/^\]/ {N; s/\]\n\[/,/g}' | jq -r '.[] | select(.fork!=true) | .name'`; do
+	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | .name'`; do
 		main_branch ${org} ${base} ${repo} ${branch}
 	done
 else
