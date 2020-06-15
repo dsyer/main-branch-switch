@@ -16,6 +16,8 @@ where
 * repo is the repo name (default all)
 * branch is the new branch name (default "main")
 
+The --* flags are optional, but if you use more than one, they have to be in that order.
+
 EOF
 	exit 1
 fi

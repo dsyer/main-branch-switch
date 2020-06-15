@@ -17,6 +17,8 @@ where
 * branch is the new branch name
 * pr is the pull request number (default to all open)
 
+The --* flags are optional, but if you use more than one, they have to be in that order.
+
 EOF
 	exit 1
 fi
