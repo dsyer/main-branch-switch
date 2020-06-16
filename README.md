@@ -34,3 +34,8 @@ $ git branch -d master
 $ git remote set-head origin main
 ```
 
+If you normally work with `origin` as the upstream then you are good to go. If you want your remote fork to be the upstream then you need to also
+
+```
+$ git push <myorg> main --set-upstream
+```
