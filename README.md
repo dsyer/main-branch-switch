@@ -23,7 +23,7 @@ $ retarget.sh --org <myorg> <myrepo> main 1234
 
 The default org is your personal org, and the default pull request is all of them (the open ones).
 
-== What to do in your Fork
+## What to do in your Fork
 
 If you have a fork of a project that has changed its default branch, you probably want to update the remote:
 
