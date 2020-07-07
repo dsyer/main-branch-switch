@@ -22,6 +22,12 @@ EOF
 	exit 1
 fi
 
+hub --version | grep "hub version 2.14.2"
+if [ $? != 0 ]; then
+   echo "hub version 2.14.2 required, please 'brew upgrade hub'"
+   exit 1
+fi
+
 if [ "$1" == "--org" ]; then
 	org=$2
 	shift
