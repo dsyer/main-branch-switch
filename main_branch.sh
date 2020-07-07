@@ -5,15 +5,15 @@ set -e
 if [ "$1" == "--help" ]; then
     cat <<EOF
 
-Create a new branch called main if it doesn't exist and make it the deafult. Usage:
+Create a new branch called main if it doesn't exist and make it the default. Usage:
 
-$ main_branch.sh [--org org] [--base base] [--repo repo] [branch]
+$ main_branch.sh [--org org] [--base base] --repo repo [branch]
 
 where
 
-* org is the Github organization (default user's own org)
+* org is the Github organization (default "heroku")
 * base is the name of the existing base branch (default "master")
-* repo is the repo name (default all)
+* repo is the repo name (required)
 * branch is the new branch name (default "main")
 
 The --* flags are optional, but if you use more than one, they have to be in that order.
@@ -27,7 +27,7 @@ if [ "$1" == "--org" ]; then
 	shift
 	shift
 else
-	org=`hub api /user | jq -r '.login'`
+	org="heroku"
 fi
 if [ "$1" == "--base" ]; then
 	base=$2
@@ -40,6 +40,9 @@ if [ "$1" == "--repo" ]; then
 	repo=$2
 	shift
 	shift
+else
+	echo "--repo required"
+	exit 1
 fi
 branch=${1:-main}
 
@@ -61,10 +64,4 @@ function main_branch {
 	retarget.sh --org ${org} --base ${base} ${repo} ${branch} && git push origin :${base}
 }
 
-if [ -z ${repo} ]; then
-	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | .name'`; do
-		main_branch ${org} ${base} ${repo} ${branch}
-	done
-else
-	main_branch ${org} ${base} ${repo} ${branch}
-fi
+main_branch ${org} ${base} ${repo} ${branch}

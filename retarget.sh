@@ -28,7 +28,7 @@ if [ "$1" == "--org" ]; then
 	shift
 	shift
 else
-	org=`hub api /user | jq -r '.login'`
+	org="heroku"
 fi
 if [ "$1" == "--base" ]; then
 	base=$2
