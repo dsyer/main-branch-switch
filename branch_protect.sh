@@ -74,7 +74,8 @@ function update_branch_protections {
   allow_force_pushes: (.allow_force_pushes.enabled  | if . then true else false end),
   allow_deletions: (.allow_deletions.enabled | if . then true else false end)
 }' < "$file" | hub api -X PUT "/repos/${org}/${repo}/branches/${branch}/protection" \
-                   -H 'Accept: application/vnd.github.luke-cage-preview+json' --input -
+                   -H 'Accept: application/vnd.github.luke-cage-preview+json' --input - && \
+         hub api -X DELETE "/repos/${org}/${repo}/branches/${base}/protection"
   fi
 }
 
