@@ -63,11 +63,14 @@ function main_branch {
 	cd tmp
 	(git checkout -b ${branch}; git push origin ${branch} --set-upstream) || git checkout ${branch}
 	hub api /repos/${org}/${repo} --field name="${repo}" --field default_branch="${branch}" > /dev/null && echo Changed default branch
-	retarget.sh --org ${org} --base ${base} ${repo} ${branch} && git push origin :${base}
 
-  if [ "$noprotect" != "true" ]; then
-      branch_protect.sh --org ${org} --base ${base} ${repo} ${branch}
-  fi
+	retarget.sh --org ${org} --base ${base} ${repo} ${branch}
+
+	if [ "$noprotect" != "true" ]; then
+		branch_protect.sh --org ${org} --base ${base} ${repo} ${branch}
+	fi
+
+	git push origin :${base}
 }
 
 if [ -z ${repo} ]; then
