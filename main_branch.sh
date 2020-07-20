@@ -7,7 +7,7 @@ if [ "$1" == "--help" ]; then
 
 Create a new branch called main if it doesn't exist and make it the default. Usage:
 
-$ main_branch.sh [--org org] [--base base] --repo repo [branch]
+$ main_branch.sh [--org org] [--base base] --repo repo [--no-protect] [branch]
 
 where
 
@@ -15,6 +15,7 @@ where
 * base is the name of the existing base branch (default "master")
 * repo is the repo name (required)
 * branch is the new branch name (default "main")
+* with no-protect, branch protections are not migrated
 
 The --* flags are optional, but if you use more than one, they have to be in that order.
 
@@ -50,6 +51,10 @@ else
 	echo "--repo required"
 	exit 1
 fi
+if [ "$1" == "--no-protect" ]; then
+  noprotect="true"
+  shift
+fi
 branch=${1:-main}
 
 function main_branch {
@@ -67,7 +72,14 @@ function main_branch {
 	cd tmp
 	(git checkout -b ${branch}; git push origin ${branch} --set-upstream) || git checkout ${branch}
 	hub api /repos/${org}/${repo} --field name="${repo}" --field default_branch="${branch}" > /dev/null && echo Changed default branch
-	retarget.sh --org ${org} --base ${base} ${repo} ${branch} && git push origin :${base}
+
+	retarget.sh --org ${org} --base ${base} ${repo} ${branch}
+
+	if [ "$noprotect" != "true" ]; then
+		branch_protect.sh --org ${org} --base ${base} ${repo} ${branch}
+	fi
+
+	git push origin :${base}
 }
 
 main_branch ${org} ${base} ${repo} ${branch}
