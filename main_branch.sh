@@ -5,7 +5,7 @@ set -e
 if [ "$1" == "--help" ]; then
     cat <<EOF
 
-Create a new branch called main if it doesn't exist and make it the deafult. Usage:
+Create a new branch called main if it doesn't exist and make it the default. Usage:
 
 $ main_branch.sh [--org org] [--base base] [--repo repo] [branch]
 
