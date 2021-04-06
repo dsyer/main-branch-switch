@@ -10,7 +10,7 @@ $ export PATH=`pwd`:$PATH
 ## Rename Default Branch
 
 ```
-rename_master.sh --org dsyer --base master --repo demo main
+rename_default.sh --org dsyer --name master --repo demo main
 ```
 
 You can switch orgs `--org <myorg>` and you can target a specific repository with `--repo <myrepo>`.

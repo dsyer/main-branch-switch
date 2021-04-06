@@ -7,12 +7,12 @@ if [ "$1" == "--help" ]; then
 
 Create a new branch called main if it doesn't exist and make it the default. Usage:
 
-$ rename_master.sh [--org org] [--base base] [--repo repo] [branch]
+$ rename_master.sh [--org org] [--name name] [--repo repo] [branch]
 
 where
 
 * org is the Github organization (default user's own org)
-* base is the name of the existing base branch (default "master")
+* name is the name of the existing base branch (default "master")
 * repo is the repo name (default all)
 * branch is the new branch name (default "main")
 
@@ -29,7 +29,7 @@ if [ "$1" == "--org" ]; then
 else
 	org=`hub api /user | jq -r '.login'`
 fi
-if [ "$1" == "--base" ]; then
+if [ "$1" == "--name" ]; then
 	base=$2
 	shift
 	shift
@@ -44,7 +44,7 @@ fi
 
 branch=${1:-main}
 
-function rename_master {
+function rename_default {
 	org=$1
 	base=$2
 	repo=$3
@@ -59,8 +59,8 @@ function rename_master {
 
 if [ -z ${repo} ]; then
 	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | select(.archived!=true) | .name'`; do
-		rename_master ${org} ${base} ${repo} ${branch}
+		rename_default ${org} ${base} ${repo} ${branch}
 	done
 else
-	rename_master ${org} ${base} ${repo} ${branch}
+	rename_default ${org} ${base} ${repo} ${branch}
 fi
