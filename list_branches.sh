@@ -35,7 +35,7 @@ else
 	fmt=json
 fi
 
-json=`hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true)' | jq -s '[.[] | {name: .name, branch: .default_branch}]'`
+json=`hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | select(.archived!=true)' | jq -s '[.[] | {name: .name, branch: .default_branch}]'`
 if [ "${fmt}" == "csv" ]; then 
 	echo 'repo,branch';
 	echo $json | jq -r '.[] | [.name,.branch] | @csv'

@@ -58,7 +58,7 @@ function rename_master {
 }
 
 if [ -z ${repo} ]; then
-	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | .name'`; do
+	for repo in `hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | select(.archived!=true) | .name'`; do
 		rename_master ${org} ${base} ${repo} ${branch}
 	done
 else
