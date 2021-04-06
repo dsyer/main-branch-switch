@@ -7,6 +7,32 @@ $ git clone https://github.com/dsyer/main-branch-switch && cd $_
 $ export PATH=`pwd`:$PATH
 ```
 
+## Rename Default Branch
+
+```
+rename_master.sh --org dsyer --base master --repo demo main
+```
+
+You can switch orgs `--org <myorg>` and you can target a specific repository with `--repo <myrepo>`.
+
+## List Default Branch Names
+
+Default to sorted list of branch names and repo names (space separated):
+
+```
+list_branches.sh --org dsyer
+...
+main xd-launchers
+main zipkin-collector-server
+main zipkin-web
+master dsyer
+master scratches
+master simple-gateway
+master skaffold-devtools-demo
+```
+
+## Alternatives
+
 To create a "main" branch and retarget all the pull requests in all the repositories in your personal Github organization:
 
 ```
