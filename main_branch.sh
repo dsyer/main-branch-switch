@@ -53,7 +53,7 @@ function main_branch {
 	base=$2
 	repo=$3
 	branch=$4
-	if ! hub api /repos/${org}/${repo}/branches | jq -r '.[].name' | grep -q ${base}; then
+	if ! hub api --paginate /repos/${org}/${repo}/branches | jq -r '.[].name' | grep -q ${base}; then
 		echo No ${base} branch in ${repo}
 		return
 	fi
