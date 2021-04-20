@@ -13,7 +13,7 @@ $ export PATH=`pwd`:$PATH
 rename_default.sh --org dsyer --name master --repo demo main
 ```
 
-You can switch orgs `--org <myorg>` and you can target a specific repository with `--repo <myrepo>`.
+You can switch orgs `--org <myorg>` and you can target a specific repository with `--repo <myrepo>`. Forks of repos from other orgs are ignored unless you specify the repo explicitly.
 
 ## List Default Branch Names
 
