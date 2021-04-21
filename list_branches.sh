@@ -32,7 +32,7 @@ if [ "$1" == "--format" ]; then
 	shift
 	shift
 else
-	fmt=json
+	fmt=txt
 fi
 
 json=`hub api --obey-ratelimit --paginate /users/${org}/repos | sed -e '/^]/ {N; s/]\n\[/,/g;}' | jq -r '.[] | select(.fork!=true) | select(.archived!=true)' | jq -s '[.[] | {name: .name, branch: .default_branch}]'`

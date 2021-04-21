@@ -17,13 +17,14 @@ You can switch orgs `--org <myorg>` and you can target a specific repository wit
 
 ## List Default Branch Names
 
-If a format is not specified, default to raw JSON output.
+If a format is not specified, default to text.
 
 * `--format txt`: sorted list of branch names and repo names (space separated).
 * `--format csv`: sorted list of branch names and repo names (csv format).
+* `--format json`: sorted list of branch names and repo names (json format).
 
 ```
-list_branches.sh --org dsyer --format txt
+list_branches.sh --org dsyer
 ...
 main xd-launchers
 main zipkin-collector-server
